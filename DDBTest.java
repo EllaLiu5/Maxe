@@ -53,7 +53,7 @@
  *      -
  *
  * (G5) Run your code on one EC2 instance, with the instance type being m3.xlarge. Describe what efforts
- *      you have made to improve the performance of your application.
+ *      you have made to improve the performance of your application, including code level improvements.
  *
  *      -
  *      -

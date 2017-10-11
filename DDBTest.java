@@ -1,5 +1,14 @@
 /**
- * README 
+ *
+ * Your     Name:
+ * Phone  Number:
+ * Email Address:
+ * University   :
+ * Dept / School:
+ *
+ *
+ * ---- README FIRST ----
+ *
  *
  * You are given the following files:
  *
@@ -9,7 +18,7 @@
  *      - TXT file containing some popular first names, one name a line, with duplicate entries.
  * (F3) lastname.txt
  *      - TXT file containing some popular last names, one name a line, with duplicate entries.
- * (F4) city.txt
+ * (F4) city.txt.gz
  *      - CSV file containing city names around the world.
  * (F5) country.txt
  *      - TXT file containing the ISO 3166 country code
@@ -74,9 +83,94 @@
 
 public class DDBtest
 {
+	public LinkedList<String> firstNames;
+	public LinkedList<String> lastNames;
+	public LinkedList<String> cities;
+	public LinkedList<String> countries;
 
-public static void mian(string[] args)
-{
-}
 
+	/**
+	 *
+	 * Constructor.
+	 *
+	 */
+
+	public DDBtest()
+	{
+		// Initialize all the input data at the beginning.
+		loadFirstNames();
+		loadLastNames();
+		loadCities();
+		loadCountries();
+	}
+
+
+	/**
+	 *
+	 * This method loads the first names from firstname.txt, performs deduplication.
+	 *
+	 */
+
+	public void loadFirstNames()
+	{
+	}
+
+
+	/**
+	 *
+	 * This method loads the last names from lastname.txt, performs deduplication.
+	 *
+	 */
+
+	public void loadLastNames()
+	{
+	}
+
+
+	/**
+	 *
+	 * This method loads the city database from city.txt.
+	 *
+	 */
+
+	public void loadCities()
+	{
+	}
+
+
+	/**
+	 *
+	 * This method loads the country database from country.txt.
+	 *
+	 */
+
+	public void loadCountries()
+	{
+	}
+
+
+	/**
+	 *
+	 * This method is the entry point to your test method. You start 
+	 *
+	 */
+
+	public void runTest()
+	{
+		// Start timing for the test
+		long t0 = System.currentTimeMillis() / 1000L;
+
+		// Stop timing for the test
+		long t1 = System.currentTimeMillis() / 1000L;
+		
+		// Total runtime, in seconds
+		long t = t1 - t0;
+		System.out.println("Total runtime in seconds: " + t);
+	}
+	
+	public static void mian(string[] args)
+	{
+		DDBTest test = new DDBTest();
+		test.runTest();
+	}
 }

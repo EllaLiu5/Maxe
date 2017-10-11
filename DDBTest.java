@@ -160,6 +160,9 @@ public class DDBtest
 		// Start timing for the test
 		long t0 = System.currentTimeMillis() / 1000L;
 
+		// TODO
+		// Do whatever you need to insert all the data into your DynamoDB table here
+
 		// Stop timing for the test
 		long t1 = System.currentTimeMillis() / 1000L;
 		

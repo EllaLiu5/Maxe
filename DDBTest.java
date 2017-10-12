@@ -46,9 +46,18 @@
  *      - longitude
  *      - country name (the long name, not the 2-letter representation)
  *
- *      How many items do you have in your DynamoDB table? 
+ *      What are the provisioned read and write capacity units for your DynamoDB talbe?
+ *
+ *      WCU:
+ *      RCU: 
+ *
+ *      If the insertions are completed, how many items do you have in your DynamoDB table? 
  *
  *      Answer: 
+ *
+ *      Approximately how much time is needed to insert all data?
+ *
+ *      Answer:     seconds
  *
  * (G4) Your DynamoDB table should be able to perform the following operations:
  *      - Uniquely identify a first name + last name combination using its unique ID

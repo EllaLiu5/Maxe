@@ -59,6 +59,12 @@
  *
  *      Answer:     seconds
  *
+ *      What is the approximate cost of owning this DynamoDB table for 8 hours? (Assuming that you create this 
+ *      table with the above-mentioned WCU and RCU and use it for 8 hours. You delete this table from your AWS
+ *      account after using it.)
+ *
+ *      Answer:     USD
+ *
  * (G4) Your DynamoDB table should be able to perform the following operations:
  *      - Uniquely identify a first name + last name combination using its unique ID
  *      - Search for all items using the same first name
@@ -69,6 +75,12 @@
  *      -
  *      -
  *      -
+ *
+ *      With these new considerations, what is the approximate cost of owning this DynamoDB table for 8 hours? 
+ *      (Assuming that you create this table with the above-mentioned WCU and RCU and use it for 8 hours. You 
+ *      delete this table from your AWS account after using it.)
+ *
+ *      Answer:     USD
  *
  * (G5) Run your code on one EC2 instance, with the instance type being m3.xlarge. Describe what efforts
  *      you have made to improve the performance of your application, including code level improvements.

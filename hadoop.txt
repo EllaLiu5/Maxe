@@ -4,19 +4,32 @@ Phone:
 Email:
 ~~~~
 
-In this challenge, you are expected to design and manage your own Hadoop cluster on AWS using EC2 instances, not the EMR service. The cluster needs to have two or more nodes. The goal is to perform a 500-GB sorting in approximately an hour using the example applications that come with the standard Hadoop distribution with both time (90 minutes) and budget ($25 USD) constraints.
+In this challenge, you are expected to design and manage your own Hadoop cluster on AWS 
+using EC2 instances, not the EMR service. The cluster needs to have two or more nodes. 
+The goal is to perform a 500-GB sorting in approximately an hour using the example applications 
+that come with the standard Hadoop distribution with both time (90 minutes) and budget 
+($25 USD) constraints.
 
-Apart from not using the EMR service, you are free to use any technology you are familiar with to achieve this goal. You are allowed to use Google search (or any other search engine). You are not allowed to seek help from others (including the use of instant messaging) during the challenge. 
+Apart from not using the EMR service, you are free to use any technology you are familiar 
+with to achieve this goal. You are allowed to use Google search (or any other search engine). 
+You are not allowed to seek help from others (including the use of instant messaging) during the 
+challenge. 
+
 
 (1) Design Phase
 
-Describe the design of your cluster in details, including the EC2 instance type and the number of nodes. If you use more than one instance type, please describe the purpose of each instance type. 
+Describe the design of your cluster in details, including the EC2 instance type and the number 
+of nodes. If you use more than one instance type, please describe the purpose of each instance type. 
 
-Describe in details how you arrived in this design. In particular, how can your design meet the above-mentioned time and budget constraints?
+Describe in details how you arrived in this design. In particular, how can your design meet the 
+above-mentioned time and budget constraints?
+
 
 (2) Hadoop Cluster Setup
 
-Launch the EC2 instances needed in your AWS account. Provide id of your instances and the security group being used on each instance. If there are anything else that is needed for us to understand your cluster, please also describe in details.
+Launch the EC2 instances needed in your AWS account. Provide id of your instances and the security 
+group being used on each instance. If there are anything else that is needed for us to understand 
+your cluster, please also describe in details.
 
 ~~~~Cluster Information~~~~
 #1: [instance id], [security group id], [private ip]
@@ -30,7 +43,8 @@ SSH into these nodes to configure your cluster. On each node, configure your bas
 [the command]
 ~~~~
 
-Once you are done with configuring your Hadoop cluster, copy and paste the bash command history from all nodes.
+Once you are done with configuring your Hadoop cluster, copy and paste the bash command history 
+from all nodes.
 
 ~~~~Node 1, Bash History~~~~
 
@@ -44,7 +58,8 @@ Once you are done with configuring your Hadoop cluster, copy and paste the bash 
 
 ~~~~
 
-If you make any modifications to the Hadoop configuration on the nodes, please copy and paste the part that you add or modify to the configuration files:
+If you make any modifications to the Hadoop configuration on the nodes, please copy and paste the 
+part that you add or modify to the configuration files:
 
 ~~~~Node 1, Configuration Filename 1~~~~
 
@@ -72,7 +87,8 @@ If you make any modifications to the Hadoop configuration on the nodes, please c
 
 (3) 10-GB Sorting
 
-Perform a 10-GB sorting first to demonstrate that the cluster works. Copy and paste the commands and the outputs from TeraGen, TeraSort, and TeraValidate.
+Perform a 10-GB sorting first to demonstrate that the cluster works. Copy and paste the commands 
+and the outputs from TeraGen, TeraSort, and TeraValidate.
 
 ~~~~TeraGen Command and Output~~~~
 
@@ -88,7 +104,8 @@ Perform a 10-GB sorting first to demonstrate that the cluster works. Copy and pa
 
 (4) 500-GB Sorting
 
-Perform the 500-GB sorting. Copy and paste the commands and the outputs from TeraGen, TeraSort, and TeraValidate.
+Perform the 500-GB sorting. Copy and paste the commands and the outputs from TeraGen, TeraSort, 
+and TeraValidate.
 
 ~~~~TeraGen Command and Output~~~~
 
@@ -102,7 +119,8 @@ Perform the 500-GB sorting. Copy and paste the commands and the outputs from Ter
 
 ~~~~
 
-While waiting for your 500-GB sorting results, please elaborate any *technical* thoughts that come to your mind that is related to this challenge.
+While waiting for your 500-GB sorting results, please elaborate any *technical* thoughts that come 
+to your mind that is related to this challenge.
 
 ~~~Thoughts~~~~
 
@@ -110,6 +128,7 @@ While waiting for your 500-GB sorting results, please elaborate any *technical* 
 
 (5) Terminate Your Cluster
 
-Terminate all the EC2 instances needed for your challenge. If you do not terminate then, you will be charged for any expenses to occur. 
+Terminate all the EC2 instances needed for your challenge. If you do not terminate then, you will 
+be charged for any expenses to occur. 
 
 (6) Submit Your Results

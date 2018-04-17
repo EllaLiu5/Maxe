@@ -98,7 +98,7 @@ and the outputs from TeraGen, TeraSort, and TeraValidate.
 
 ~~~~
 
-~~~~TeraSort Command and Output~~~~
+~~~~TeraValidate Command and Output~~~~
 
 ~~~~
 
@@ -115,7 +115,7 @@ and TeraValidate.
 
 ~~~~
 
-~~~~TeraSort Command and Output~~~~
+~~~~TeraValidate Command and Output~~~~
 
 ~~~~
 

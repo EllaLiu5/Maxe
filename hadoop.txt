@@ -132,3 +132,7 @@ Terminate all the EC2 instances needed for your challenge. If you do not termina
 be charged for any expenses to occur. 
 
 (6) Submit Your Results
+
+Please email this file to aws-learn-bigddata-101@amazon.com.
+
+

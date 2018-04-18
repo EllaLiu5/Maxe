@@ -7,8 +7,8 @@ Email:
 In this challenge, you are expected to design and manage your own Hadoop cluster on AWS 
 using EC2 instances, not the EMR service. The cluster needs to have two or more nodes. 
 The goal is to perform a 500-GB sorting in approximately an hour using the example applications 
-that come with the standard Hadoop distribution with both deadline (90 minutes) and budget 
-($25 USD) constraints.
+that come with the standard Hadoop distribution with both deadline (60 minutes) and budget 
+($20 USD) constraints.
 
 Apart from not using the EMR service, you are free to use any technology you are familiar 
 with to achieve this goal. You are allowed to use Google search (or any other search engine). 

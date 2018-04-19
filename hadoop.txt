@@ -139,6 +139,6 @@ be charged for any expenses to occur.
 
 (6) Submit Your Results
 
-Please email this file to aws-learn-bigddata-101@amazon.com.
+Please email this file to aws-learn-bigdata-101@amazon.com.
 
 

@@ -7,7 +7,7 @@ Phone:
 Email:
 
 
-Download and use the attached CloudFormation JSON file in order to bring up a stack in Cloudformation. You can bring this stack up in any AWS Region you like but you need to make sure you have an SSH key-pair in that region. This stack creates a VPC (10.0.0.0/16) with public and private subnets. 
+Download and use the specified CloudFormation JSON file in order to bring up a stack in Cloudformation. You can bring this stack up in any AWS Region you like but you need to make sure you have an SSH key-pair in that region. This stack creates a VPC (10.0.0.0/16) with public and private subnets. 
 
 1. The first challenge is to pick the appropriate CIDR for the public subnet under the “Parameters” section. Choosing the right CIDR will allow you to successfully launch the Cloudformation stack that creates a public instance (can be used as a jump host and is also configured to work as a NAT Instance) and a private instance that’s in a private subnet. 
 

@@ -1,0 +1,443 @@
+{
+	"AWSTemplateFormatVersion": "2010-09-09",
+	"Parameters": {
+		"InstanceType": {
+			"Type": "String",
+			"Description": "instance type to use",
+			"Default": "t2.micro"
+		},
+		"KeyPair": {
+			"Type": "AWS::EC2::KeyPair::KeyName",
+			"Description": "The name of an Amazon EC2 key pair in the region in which you are creating a CloudFormation stack.",
+			"Default": "Grad_TechChallenge"
+					},
+		"PublicSubnetCIDR":{
+			"Type": "String",
+			"Description": "public subnet ip address range",
+			"AllowedValues" : ["10.0.1.0/32", "10.0.1.1/24", "10.0.1.0/24","10.0.1.125/24"]
+		}
+	},
+	"Mappings": {
+		"AmazonLinuxAMI": {
+			"eu-west-1": {
+				"pv": "ami-23ab2250",
+				"hvm": "ami-b0ac25c3"
+			},
+			"ap-southeast-1": {
+				"pv": "ami-f3dd0a90",
+				"hvm": "ami-1ddc0b7e"
+			},
+			"ap-southeast-2": {
+				"pv": "ami-8f94b9ec",
+				"hvm": "ami-0c95b86f"
+			},
+			"eu-central-1": {
+				"pv": "ami-27c12348",
+				"hvm": "ami-d3c022bc"
+			},
+			"ap-northeast-2": {
+				"hvm": "ami-cf32faa1"
+			},
+			"ap-northeast-1": {
+				"pv": "ami-26160d48",
+				"hvm": "ami-29160d47"
+			},
+			"us-east-1": {
+				"pv": "ami-8ff710e2",
+				"hvm": "ami-f5f41398"
+			},
+			"sa-east-1": {
+				"pv": "ami-e188018d",
+				"hvm": "ami-fb890097"
+			},
+			"us-west-1": {
+				"pv": "ami-ac85fbcc",
+				"hvm": "ami-6e84fa0e"
+			},
+			"us-west-2": {
+				"pv": "ami-eff1028f",
+				"hvm": "ami-d0f506b0"
+			}
+		},
+		"natAMI": {
+			"eu-west-1": {
+				"pv": "ami-cb7de3bc",
+				"hvm": "ami-6975eb1e"
+			},
+			"ap-southeast-1": {
+				"pv": "ami-b098a9e2",
+				"hvm": "ami-b49dace6"
+			},
+			"ap-southeast-2": {
+				"pv": "ami-0fed9d35",
+				"hvm": "ami-e7ee9edd"
+			},
+			"eu-central-1": {
+				"pv": "ami-3604392b",
+				"hvm": "ami-46073a5b"
+			},
+			"ap-northeast-1": {
+				"pv": "ami-c7e016c7",
+				"hvm": "ami-03cf3903"
+			},
+			"us-east-1": {
+				"pv": "ami-c02b04a8",
+				"hvm": "ami-303b1458"
+			},
+			"sa-east-1": {
+				"pv": "ami-93fb408e",
+				"hvm": "ami-fbfa41e6"
+			},
+			"us-west-1": {
+				"pv": "ami-67a54423",
+				"hvm": "ami-7da94839"
+			},
+			"us-west-2": {
+				"pv": "ami-2dae821d",
+				"hvm": "ami-69ae8259"
+			}
+		}
+    },
+    "Resources": {
+		"awsVpc": {
+			"Type": "AWS::EC2::VPC",
+			"Properties": {
+				"CidrBlock": "10.0.0.0/16",
+				"EnableDnsHostnames": "true",
+				"Tags" : [{"Key" : "Name", "Value" : "TechChallenge"}]
+			}
+		},
+		"awsIgw": {
+			"Type": "AWS::EC2::InternetGateway"
+		},
+		"awsIgwAttachment": {
+			"Type": "AWS::EC2::VPCGatewayAttachment",
+			"Properties": {
+				"InternetGatewayId": {
+					"Ref": "awsIgw"
+				},
+				"VpcId": {
+					"Ref": "awsVpc"
+				}
+			}
+        },
+        "publicSubnet": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"AvailabilityZone": {
+					"Fn::Select": [
+						"0", {
+							"Fn::GetAZs": {
+								"Ref": "AWS::Region"
+							}
+						}
+					]
+				},
+				"CidrBlock": {"Ref":"PublicSubnetCIDR"},
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Public Subnet"
+				}]
+			}
+		},
+		"publicRouteTable": {
+			"Type": "AWS::EC2::RouteTable",
+			"Properties": {
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Public Route Table"
+				}]
+			}
+		},
+		"publicSubnetRouteTableAssociation": {
+			"Type": "AWS::EC2::SubnetRouteTableAssociation",
+			"Properties": {
+				"RouteTableId": {
+					"Ref": "publicRouteTable"
+				},
+				"SubnetId": {
+					"Ref": "publicSubnet"
+				}
+			}
+        },
+        "publicSg": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"Properties": {
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"SecurityGroupIngress": [{
+					"IpProtocol": "tcp",
+					"FromPort": "80",
+					"ToPort": "80",
+					"CidrIp": "0.0.0.0/0"
+				}, {
+					"IpProtocol": "icmp",
+					"FromPort": "-1",
+					"ToPort": "-1",
+					"CidrIp": "0.0.0.0/0"
+				}],
+				"SecurityGroupEgress": [],
+				"GroupDescription": "allow ssh connection",
+				"Tags": [{
+					"Key": "Name",
+					"Value": "NAT Instance SG"
+				}]
+			}
+		},
+		"publicEip": {
+			"Type": "AWS::EC2::EIP",
+			"Properties": {
+				"InstanceId": {
+					"Ref": "publicLinux"
+				},
+				"Domain": "vpc"
+			}
+		},
+		"publicLinux": {
+			"Type": "AWS::EC2::Instance",
+			"Properties": {
+				"InstanceType": {
+					"Ref": "InstanceType"
+				},
+				"ImageId": {
+					"Fn::FindInMap": [
+						"natAMI", {
+							"Ref": "AWS::Region"
+						},
+						"hvm"
+					]
+				},
+				"KeyName": {
+					"Ref": "KeyPair"
+				},
+				"SubnetId": {
+					"Ref": "publicSubnet"
+				},
+				"PrivateIpAddress": "10.0.1.4",
+				"SecurityGroupIds": [{
+					"Ref": "publicSg"
+                }],
+                "SourceDestCheck" : false,
+				"Tags": [{
+					"Key": "Name",
+					"Value": "NAT Instance"
+				}]
+			}
+        },
+        "privateSubnet": {
+			"Type": "AWS::EC2::Subnet",
+			"Properties": {
+				"AvailabilityZone": {
+					"Fn::Select": [
+						"0", {
+							"Fn::GetAZs": {
+								"Ref": "AWS::Region"
+							}
+						}
+					]
+				},
+				"CidrBlock": "10.0.2.0/24",
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Private Subnet"
+				}]
+			}
+		},
+		"privateRouteTable": {
+			"Type": "AWS::EC2::RouteTable",
+			"Properties": {
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Private Route Table"
+				}]
+			}
+		},
+		"privateSubnetRouteTableAssociation": {
+			"Type": "AWS::EC2::SubnetRouteTableAssociation",
+			"Properties": {
+				"RouteTableId": {
+					"Ref": "privateRouteTable"
+				},
+				"SubnetId": {
+					"Ref": "privateSubnet"
+				}
+			}
+        },
+        "privateNetworkAcl": {
+			"Type": "AWS::EC2::NetworkAcl",
+			"Properties": {
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Private Subnet ACL"
+				}]
+			}
+		},
+		"privateNetworkAclEntryInboundSSH": {
+			"Type": "AWS::EC2::NetworkAclEntry",
+			"Properties": {
+				"CidrBlock": "10.0.1.4/32",
+				"Egress": "false",
+				"NetworkAclId": {
+					"Ref": "privateNetworkAcl"
+				},
+				"Protocol": "6",
+				"PortRange": {
+					"From": 22,
+					"To": 22
+				},
+				"RuleAction": "Deny",
+				"RuleNumber": "100"
+			}
+        },
+        "privateNetworkAclEntryInboundICMP": {
+			"Type": "AWS::EC2::NetworkAclEntry",
+			"Properties": {
+				"CidrBlock": "10.0.0.0/16",
+				"Egress": "false",
+				"NetworkAclId": {
+					"Ref": "privateNetworkAcl"
+				},
+                "Protocol": "1",
+                "Icmp" : { "Code" : "-1", "Type" : "-1" },
+				"PortRange": {
+					"From": -1,
+					"To": -1
+				},
+				"RuleAction": "Allow",
+				"RuleNumber": "200"
+			}
+        },
+        "privateNetworkAclEntryInboundEphemeralPort": {
+			"Type": "AWS::EC2::NetworkAclEntry",
+			"Properties": {
+				"CidrBlock": "10.0.0.0/16",
+				"Egress": "false",
+				"NetworkAclId": {
+					"Ref": "privateNetworkAcl"
+				},
+				"Protocol": "-1",
+				"PortRange": {
+					"From": 1024,
+					"To": 65535
+				},
+				"RuleAction": "Allow",
+				"RuleNumber": "300"
+			}
+        },
+		"privateNetworkAclEntryOutbound": {
+			"Type": "AWS::EC2::NetworkAclEntry",
+			"Properties": {
+				"CidrBlock": "0.0.0.0/0",
+				"Egress": "true",
+				"NetworkAclId": {
+					"Ref": "privateNetworkAcl"
+				},
+				"Protocol": "-1",
+				"PortRange": {
+					"From": 1,
+					"To": 65535
+				},
+				"RuleAction": "Allow",
+				"RuleNumber": "200"
+			}
+		},
+		"privateSubnetNetworkAclAssociation": {
+			"Type": "AWS::EC2::SubnetNetworkAclAssociation",
+			"Properties": {
+				"SubnetId": {
+					"Ref": "privateSubnet"
+				},
+				"NetworkAclId": {
+					"Ref": "privateNetworkAcl"
+				}
+			}
+        },
+        "privateSg": {
+			"Type": "AWS::EC2::SecurityGroup",
+			"Properties": {
+				"VpcId": {
+					"Ref": "awsVpc"
+				},
+				"SecurityGroupIngress": [{
+					"IpProtocol": "tcp",
+					"FromPort": "22",
+					"ToPort": "22",
+					"CidrIp": "10.0.0.0/16"
+				}],
+				"GroupDescription": "allow ssh connection",
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Private Instance SG"
+				}]
+			}
+        },
+        "privateLinux": {
+			"Type": "AWS::EC2::Instance",
+			"Properties": {
+				"InstanceType": {
+					"Ref": "InstanceType"
+				},
+				"ImageId": {
+					"Fn::FindInMap": [
+						"AmazonLinuxAMI", {
+							"Ref": "AWS::Region"
+						},
+						"hvm"
+					]
+				},
+				"KeyName": {
+					"Ref": "KeyPair"
+				},
+				"SubnetId": {
+					"Ref": "privateSubnet"
+				},
+				"PrivateIpAddress": "10.0.2.4",
+				"SecurityGroupIds": [{
+					"Ref": "privateSg"
+				}],
+				"UserData": {
+					"Fn::Base64":{
+						"Fn::Join" : ["", [
+							"#!/bin/bash -v \n",
+							"mkdir -p /var/www/html \n",
+							"echo \"hello\" > /var/www/html/index.html \n",
+							"iptables -A INPUT -p icmp -j DROP \n",
+							"iptables -L \n",
+							"sed -i -e '/^PasswordAuthentication / s/ .*/ yes/' /etc/ssh/sshd_config \n",
+							"sed -i -e 's/^ec2-user:[^:]\\+:/ec2-user:\\$6\\$nFxBwmZJp0by5VHA\\$HL5kZg3Un8HdhWacwQ1SA6YHP9xO0Xs6vmGJIqpklVMBXm3d8BG3D\\/bur7aBMKjAZFQmbm8aUJgduUfbXDfqs\\/:/' /etc/shadow \n",
+							"service sshd restart"
+						]]}
+
+				},
+				"Tags": [{
+					"Key": "Name",
+					"Value": "Private Instance"
+				}]
+			}
+        }
+    },
+    "Outputs": {
+        "publicEipIP": {
+            "Description": "IP of EIP in AWS",
+            "Value": {
+                "Ref": "publicEip"
+            }
+        }
+    }
+}  

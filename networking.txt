@@ -90,4 +90,4 @@ Steps you took to implement this:
 This is the end of the Challenge. Please make sure you delete the Cloudformation stack and the ELB (Elastic Load Balancer) before you log out of your AWS accounts to prevent recurring charges. 
 
 
-Please email this file to ...@amazon.com.
+Please submit your results to aws-learn-syd-grad-results@amazon.com.
